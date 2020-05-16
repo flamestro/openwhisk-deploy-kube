@@ -1,0 +1,35 @@
+whisk:
+  ingress:
+    type: NodePort
+    apiHostName: 172.17.0.2
+    apiHostPort: 31001
+
+controller:
+  imageName: "flamestro/controller"
+  imageTag: "latest"
+  imagePullPolicy: Always
+
+
+utility:
+  imageName: "flamestro/ow-utils"
+  imageTag: "latest"
+  imagePullPolicy: Always
+
+
+invoker:
+  options: "-Dwhisk.spi.LogStoreProvider=org.apache.openwhisk.core.containerpool.logging.LogDriverLogStoreProvider"
+  imagePullPolicy: Always
+  containerFactory:
+    impl: "docker"
+  imageName: "flamestro/invoker"
+  imageTag: "latest"
+
+nginx:
+  httpsNodePort: 31001
+
+probes:
+  controller:
+    livenessProbe:
+      initialDelaySeconds: 30
+    readinessProbe:
+      initialDelaySeconds: 30
