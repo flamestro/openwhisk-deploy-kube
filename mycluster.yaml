@@ -1,7 +1,9 @@
+# For kind: Get the IP with $ kubectl describe node kind-worker | grep InternalIP: | awk '{print $2}'
+# For minikube: Get the IP with $ kubectl describe node minikube | grep InternalIP: | awk '{print $2}'
 whisk:
   ingress:
     type: NodePort
-    apiHostName: 172.17.0.2
+    apiHostName: INTERNALIPTOUPDATE
     apiHostPort: 31001
 
 controller:
@@ -20,7 +22,7 @@ invoker:
   options: "-Dwhisk.spi.LogStoreProvider=org.apache.openwhisk.core.containerpool.logging.LogDriverLogStoreProvider"
   imagePullPolicy: Always
   containerFactory:
-    impl: "docker"
+    impl: "kubernetes"
   imageName: "flamestro/invoker"
   imageTag: "latest"
 
